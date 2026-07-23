@@ -1,0 +1,98 @@
+---
+interface Props {
+  isHome?: boolean;
+}
+
+const { isHome = true } = Astro.props;
+const prefix = isHome ? "" : "/";
+---
+
+<footer class="improved-footer">
+  <div id="footer-particles"></div>
+  <div class="footer-container">
+    <!-- Sección 1: Logo y descripción -->
+    <div class="footer-section">
+      <div class="footer-logo">
+        <img src="/images/logos/logo_Blanco_nt.png" alt="TechnoWards Logo" />
+        <span class="footer-logo-text">TechnoWards</span>
+      </div>
+      <p>Transformando datos en soluciones inteligentes para un futuro mejor.</p>
+      
+      <!-- Redes sociales -->
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61575732572602" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/529982288611" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://github.com/technowards" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+    
+    <!-- Sección 2: Enlaces Rápidos -->
+    <div class="footer-section hide-on-small-mobile">
+      <h3 class="footer-title">Enlaces Rápidos</h3>
+      <ul class="footer-links">
+        <li><a href={`${prefix}#home`}><i class="fas fa-chevron-right"></i> Inicio</a></li>
+        <li><a href={`${prefix}#about`}><i class="fas fa-chevron-right"></i> Nosotros</a></li>
+        <li><a href={`${prefix}#team`}><i class="fas fa-chevron-right"></i> Equipo</a></li>
+        <li><a href={`${prefix}#projects`}><i class="fas fa-chevron-right"></i> Proyectos</a></li>
+        <li><a href={`${prefix}#contact`}><i class="fas fa-chevron-right"></i> Contacto</a></li>
+      </ul>
+    </div>
+    
+    <!-- Sección 3: Horario y ubicación -->
+    <div class="footer-section hide-on-small-mobile">
+      <h3 class="footer-title">Horario de Atención</h3>
+      <div>
+        <p style="color: #cbd5e1; margin-bottom: 1rem;">Lunes a Viernes: 9:00 AM - 6:00 PM<br>Sábados: 10:00 AM - 2:00 PM</p>
+      </div>
+      
+      <h3 class="footer-title">Ubicación</h3>
+      <div>
+        <p style="color: #cbd5e1;">Universidad del Caribe<br>Cancún, Quintana Roo, México</p>
+      </div>
+    </div>
+    
+    <!-- Sección 4: Newsletter -->
+    <div class="footer-section hide-on-small-mobile">
+      <div class="footer-newsletter">
+        <h3 class="footer-title">Newsletter</h3>
+        <p style="color: #cbd5e1;">Suscríbete para recibir nuestras actualizaciones</p>
+        <form class="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="Tu correo electrónico" required />
+          <button type="submit" class="newsletter-btn">Suscribirse</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; 2026 TechnoWards. Todos los derechos reservados.</p>
+    <div class="footer-credits">
+      <span>Desarrollado con <i class="fas fa-heart" style="color: #e53e3e;"></i> por el equipo TechnoWards</span>
+    </div>
+  </div>
+  
+  <a href={`${prefix}#home`} class="back-to-top" aria-label="Volver arriba">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+</footer>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof particlesJS !== 'undefined' && document.getElementById('footer-particles')) {
+      particlesJS('footer-particles', {
+        particles: {
+          number: { value: 60, density: { enable: true, value_area: 800 } },
+          color: { value: "#3b82f6" },
+          shape: { type: "circle" },
+          opacity: { value: 0.3, random: true },
+          size: { value: 3, random: true },
+          line_linked: { enable: false },
+          move: { enable: true, speed: 1, direction: "none", random: true }
+        },
+        interactivity: {
+          events: { onhover: { enable: true, mode: "bubble" } }
+        }
+      });
+    }
+  });
+</script>

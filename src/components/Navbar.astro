@@ -1,0 +1,38 @@
+---
+interface Props {
+  isHome?: boolean;
+}
+
+const { isHome = true } = Astro.props;
+const prefix = isHome ? "" : "/";
+---
+
+<header id="mainNav">
+  <div class="nav-container">
+    <a href="/" class="logo">
+      <img src="/images/logos/logo_Negro_nt.png" alt="TechnoWards Logo" class="logo-light" />
+      <img src="/images/logos/logo_Blanco_nt.png" alt="TechnoWards Logo" class="logo-dark" />
+      <span class="logo-text">TechnoWards</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href={`${prefix}#home`} class="nav-link">Inicio</a></li>
+      <li><a href={`${prefix}#about`} class="nav-link">Nosotros</a></li>
+      <li><a href={`${prefix}#team`} class="nav-link">Equipo</a></li>
+      <li><a href={`${prefix}#projects`} class="nav-link">Proyectos</a></li>
+      <li><a href={`${prefix}#contact`} class="nav-link">Contacto</a></li>
+      <li>
+        <button id="theme-toggle" aria-label="Cambiar tema">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </li>
+    </ul>
+
+    <button class="menu-toggle" aria-label="Abrir menú de navegación">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-overlay"></div>
+  </div>
+</header>

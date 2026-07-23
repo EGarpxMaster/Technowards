@@ -1,0 +1,375 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { PROJECTS, type Project } from '../../data/projects';
+import { TEAM_MEMBERS } from '../../data/team';
+
+export async function getStaticPaths() {
+  return PROJECTS.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+// Obtener los datos completos de los participantes usando sus slugs
+const projectMembers = (project.participants || [])
+  .map(slug => TEAM_MEMBERS.find(m => m.slug === slug))
+  .filter(Boolean);
+---
+
+<Layout title={`${project.title} | Proyecto - TechnoWards`} description={project.summary} isHome={false}>
+  <main class="project-page">
+    <div class="containers">
+      <!-- Botón de regreso -->
+      <a href="/#projects" class="back-link" data-aos="fade-right">
+        <i class="fas fa-arrow-left"></i> Volver a Proyectos
+      </a>
+
+      <!-- Encabezado del Proyecto -->
+      <header class="project-header" data-aos="fade-up">
+        <span class="project-cat-badge">{project.category}</span>
+        <h1 class="project-main-title">{project.title}</h1>
+        <p class="project-summary-text">{project.summary}</p>
+        
+        {project.link && (
+          <div class="project-header-actions">
+            <a href={project.link} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              {project.linkText || "Visitar Sitio"} <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        )}
+      </header>
+
+      <!-- Imagen Destacada -->
+      <div class="project-hero-image" data-aos="fade-up">
+        <img src={project.mainImage} alt={project.title} />
+      </div>
+
+      <!-- Rejilla de Detalles -->
+      <div class="project-details-grid">
+        <!-- Columna Principal: Descripción, Servicios/Características -->
+        <div class="project-main-info">
+          <section class="info-card" data-aos="fade-up">
+            <h2 class="card-title"><i class="fas fa-info-circle"></i> Descripción del Proyecto</h2>
+            <div class="description-body">
+              {project.description.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </section>
+
+          {project.services && (
+            <section class="info-card" data-aos="fade-up">
+              <h2 class="card-title"><i class="fas fa-tools"></i> Servicios Incluidos</h2>
+              <ul class="features-list">
+                {project.services.map((service) => (
+                  <li><i class="fas fa-check-circle"></i> {service}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {project.features && (
+            <section class="info-card" data-aos="fade-up">
+              <h2 class="card-title"><i class="fas fa-star"></i> Características Principales</h2>
+              <ul class="features-list">
+                {project.features.map((feature) => (
+                  <li><i class="fas fa-check-circle"></i> {feature}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </div>
+
+        <!-- Columna Secundaria: Tecnologías -->
+        <div class="project-side-info">
+          <section class="info-card" data-aos="fade-up">
+            <h2 class="card-title"><i class="fas fa-laptop-code"></i> Tecnologías Utilizadas</h2>
+            <div class="tech-tags-wrap">
+              {project.technologies.map((tech) => (
+                <span class="tech-tag-pill">{tech}</span>
+              ))}
+            </div>
+          </section>
+
+          {projectMembers.length > 0 && (
+            <section class="info-card" data-aos="fade-up" data-aos-delay="100">
+              <h2 class="card-title"><i class="fas fa-users"></i> Equipo del Proyecto</h2>
+              <div class="participants-list">
+                {projectMembers.map((member) => (
+                  <a href={`/equipo/${member?.slug}`} class="participant-item">
+                    <img src={member?.image} alt={member?.name} class="participant-avatar" loading="lazy" />
+                    <span class="participant-name">{member?.name}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      </div>
+
+      <!-- Galería de Evidencias de Fotografías -->
+      <section class="gallery-section" data-aos="fade-up">
+        <h2 class="section-title">Galería de Evidencias</h2>
+        <p class="gallery-subtitle">Imágenes del proceso de trabajo, mantenimiento e instalaciones realizadas.</p>
+        
+        <div class="gallery-grid">
+          {project.gallery.map((imagePath, index) => (
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay={index * 100}>
+              <img src={imagePath} alt={`Evidencia ${index + 1} - ${project.title}`} loading="lazy" />
+              <div class="gallery-overlay">
+                <i class="fas fa-search-plus"></i>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .project-page {
+    padding-top: 130px;
+    padding-bottom: 5rem;
+    background-color: var(--bg-color);
+    min-height: 100vh;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    transition: var(--transition);
+  }
+
+  .back-link:hover {
+    color: #2563eb;
+    transform: translateX(-5px);
+  }
+
+  .project-header {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .project-cat-badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .project-main-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+
+  .project-summary-text {
+    font-size: 1.15rem;
+    color: var(--light-text);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-hero-image {
+    width: 100%;
+    max-height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px var(--shadow);
+    margin-bottom: 3rem;
+    border: 1px solid var(--border-color);
+  }
+
+  .project-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  @media (max-width: 992px) {
+    .project-details-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .info-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px var(--shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 2px solid var(--accent-color-light);
+    padding-bottom: 0.75rem;
+  }
+
+  .card-title i {
+    color: var(--accent-color);
+  }
+
+  .description-body p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .features-list li {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .features-list li i {
+    color: var(--accent-color);
+  }
+
+  /* Participantes del Proyecto */
+  .participants-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .participant-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: var(--transition);
+  }
+  
+  .participant-item:hover {
+    background-color: var(--bg-color);
+    transform: translateX(5px);
+  }
+  
+  .participant-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-color-light);
+  }
+  
+  .participant-name {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .tech-tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tech-tag-pill {
+    padding: 0.5rem 1.1rem;
+    background-color: var(--accent-color-light);
+    color: var(--accent-color);
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .gallery-section {
+    margin-top: 3rem;
+  }
+
+  .gallery-subtitle {
+    text-align: center;
+    color: var(--light-text);
+    margin-bottom: 2.5rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 240px;
+    box-shadow: 0 5px 15px var(--shadow);
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: var(--transition);
+    color: white;
+    font-size: 1.8rem;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.08);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+</style>

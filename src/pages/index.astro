@@ -1,0 +1,192 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TeamCard from '../components/TeamCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { TEAM_MEMBERS } from '../data/team';
+import { PROJECTS } from '../data/projects';
+---
+
+<Layout title="TechnoWards | Portafolio & Soluciones Tecnológicas">
+  <main id="app">
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div id="particles-js"></div>
+      <div class="hero-content">
+        <div class="containers">
+          <h1 id="typed-text" data-aos="fade-up"></h1>
+          <p data-aos="fade-up">Somos un equipo de estudiantes de Ingeniería en Datos e Inteligencia Organizacional comprometidos con ofrecer soluciones tecnológicas innovadoras.</p>
+          <div class="hero-buttons" data-aos="fade-up">
+            <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
+            <a href="#contact" class="btn btn-outline">Contáctanos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="containers">
+        <h2 class="section-title">Sobre Nosotros</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <h3 data-aos="fade-right" data-aos-delay="100">¿Quiénes Somos?</h3>
+            <p data-aos="fade-right" data-aos-delay="200">Somos estudiantes de la carrera de Ingeniería en Datos e Inteligencia Organizacional en la Universidad del Caribe. Nuestro equipo se formó con el propósito de aplicar nuestros conocimientos académicos en proyectos reales que impacten positivamente a organizaciones y la sociedad.</p>
+            
+            <h3 data-aos="fade-right" data-aos-delay="300">Nuestra Misión</h3>
+            <p data-aos="fade-right" data-aos-delay="400">Transformar datos en inteligencia accionable mediante soluciones tecnológicas innovadoras que ayuden a las organizaciones a tomar mejores decisiones y optimizar sus procesos.</p>
+            
+            <h3 data-aos="fade-right" data-aos-delay="500">Nuestra Visión</h3>
+            <p data-aos="fade-right" data-aos-delay="600">Ser reconocidos como un referente en el desarrollo de soluciones basadas en datos e inteligencia artificial, formando profesionales altamente capacitados que lideren la transformación digital en México.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section">
+      <div class="containers">
+        <h2 class="section-title">Nuestro Equipo</h2>
+        <p style="text-align: center; color: var(--light-text); margin-bottom: 2rem;">Haz clic en cualquiera de los integrantes para explorar su perfil completo y CV.</p>
+        
+        <div class="team-container">
+          {TEAM_MEMBERS.map((member) => (
+            <TeamCard member={member} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+      <div class="containers">
+        <h2 class="section-title">Nuestros Proyectos</h2>
+        <p style="text-align: center; color: var(--light-text); margin-bottom: 2rem;">Haz clic en cada proyecto para ver los detalles y la galería de evidencias.</p>
+        
+        <div class="projects-container">
+          {PROJECTS.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+      <div class="containers">
+        <h2 class="section-title">Contáctanos</h2>
+        <div class="contact-container">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon" data-aos="fade-right">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-text" data-aos="zoom-in">
+                <h4>Ubicación</h4>
+                <p>Cancún, Quintana Roo, México</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <a href="mailto:contacto@technowards.com" class="contact-icon" data-aos="fade-right" aria-label="Enviar email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <div class="contact-text" data-aos="zoom-in">
+                <h4>Email</h4>
+                <a href="mailto:contacto@technowards.com">contacto@technowards.com</a>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <a href="tel:+529982288611" class="contact-icon" data-aos="fade-right" aria-label="Llamar">
+                <i class="fas fa-phone"></i>
+              </a>
+              <div class="contact-text" data-aos="zoom-in">
+                <h4>Teléfono</h4>
+                <a href="tel:+529982288611">+52 998 228 8611</a>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <a href="https://wa.me/529982288611" class="contact-icon" data-aos="fade-right" target="_blank" rel="noopener noreferrer" aria-label="Enviar WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+              <div class="contact-text" data-aos="zoom-in">
+                <h4>WhatsApp</h4>
+                <a href="https://wa.me/529982288611" target="_blank" rel="noopener noreferrer">Envíanos un mensaje</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="contact-form" data-aos="zoom-in">
+            <form id="main-contact-form" data-aos="flip-left">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Nombre" required />
+              </div>
+              
+              <div class="form-group">
+                <input type="email" class="form-control" placeholder="Email" required />
+              </div>
+              
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Asunto" required />
+              </div>
+              
+              <div class="form-group">
+                <textarea class="form-control" placeholder="Mensaje" required></textarea>
+              </div>
+              
+              <button type="submit" class="btn-submit" data-aos="zoom-in">Enviar Mensaje</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Typed.js initialization for main hero title
+    if (typeof Typed !== 'undefined' && document.getElementById('typed-text')) {
+      new Typed('#typed-text', {
+        strings: [
+          'Innovando con Datos e Inteligencia', 
+          'Soluciones Tecnológicas Avanzadas', 
+          'Transformando Ideas en Realidad'
+        ],
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 2000,
+        loop: true
+      });
+    }
+
+    // Particles.js initialization for hero section
+    if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js')) {
+      particlesJS('particles-js', {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: "#3b82f6" },
+          shape: { type: "circle" },
+          opacity: { value: 0.5, random: true },
+          size: { value: 3, random: true },
+          line_linked: { enable: true, distance: 150, color: "#3b82f6", opacity: 0.3, width: 1 },
+          move: { enable: true, speed: 2 }
+        },
+        interactivity: {
+          events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" } }
+        }
+      });
+    }
+
+    // Contact form submit mock
+    const contactForm = document.getElementById('main-contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('¡Gracias por ponerte en contacto con TechnoWards! Te responderemos muy pronto.');
+        contactForm.reset();
+      });
+    }
+  });
+</script>

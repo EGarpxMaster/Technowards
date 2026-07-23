@@ -1,0 +1,121 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  isHome?: boolean;
+}
+
+const { 
+  title = "TechnoWards | Soluciones Tecnológicas & Analítica de Datos", 
+  description = "Equipo de estudiantes de Ingeniería en Datos e Inteligencia Organizacional en Cancún, Quintana Roo. Soluciones web, análisis de datos e infraestructura.",
+  isHome = true
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/logos/logo_Blanco_nt.png">
+    
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- External Animation Scripts -->
+    <script is:inline src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script is:inline src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Credly Embed Utilities -->
+    <script is:inline type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+
+    <script is:inline>
+      // Persistent theme detection
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark-mode');
+          document.body?.classList.add('dark-mode');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <Navbar isHome={isHome} />
+    <slot />
+    <Footer />
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize AOS
+        if (typeof AOS !== 'undefined') {
+          AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic',
+            delay: 100
+          });
+        }
+
+        // Theme toggle logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (themeToggleBtn) {
+          themeToggleBtn.addEventListener('click', function() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            document.documentElement.classList.toggle('dark-mode', isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            const icon = themeToggleBtn.querySelector('i');
+            if (icon) {
+              icon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+          });
+
+          // Sync initial icon state
+          const isDarkInitial = document.body.classList.contains('dark-mode');
+          const initialIcon = themeToggleBtn.querySelector('i');
+          if (initialIcon) {
+            initialIcon.className = isDarkInitial ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          }
+        }
+
+        // Mobile menu toggle logic
+        const menuToggleBtn = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+
+        if (menuToggleBtn && navLinks) {
+          menuToggleBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            if (navOverlay) navOverlay.classList.toggle('active');
+          });
+
+          if (navOverlay) {
+            navOverlay.addEventListener('click', function() {
+              navLinks.classList.remove('active');
+              navOverlay.classList.remove('active');
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

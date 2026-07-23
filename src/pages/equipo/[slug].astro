@@ -1,0 +1,429 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { TEAM_MEMBERS, type TeamMember } from '../../data/team';
+
+export async function getStaticPaths() {
+  return TEAM_MEMBERS.map((member) => ({
+    params: { slug: member.slug },
+    props: { member },
+  }));
+}
+
+interface Props {
+  member: TeamMember;
+}
+
+const { member } = Astro.props;
+---
+
+<Layout title={`${member.name} | Perfil & CV - TechnoWards`} description={`${member.name} - ${member.role} en TechnoWards.`} isHome={false}>
+  <main class="profile-page">
+    <div class="containers">
+      <!-- Botón de regreso -->
+      <a href="/#team" class="back-link" data-aos="fade-right">
+        <i class="fas fa-arrow-left"></i> Volver al Equipo
+      </a>
+
+      <!-- Encabezado del Perfil -->
+      <header class="profile-header" data-aos="fade-up">
+        <div class="profile-avatar">
+          <img src={member.image} alt={member.name} />
+        </div>
+        <div class="profile-title-area">
+          <h1 class="profile-name">{member.name}</h1>
+          <p class="profile-role">{member.role}</p>
+
+          <div class="profile-social">
+            {member.social.linkedin && (
+              <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" class="social-badge" title="LinkedIn">
+                <i class="fab fa-linkedin"></i> LinkedIn
+              </a>
+            )}
+            {member.social.github && (
+              <a href={member.social.github} target="_blank" rel="noopener noreferrer" class="social-badge" title="GitHub">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            )}
+            {member.social.email && (
+              <a href={`mailto:${member.social.email}`} class="social-badge" title="Enviar Correo">
+                <i class="fas fa-envelope"></i> Email
+              </a>
+            )}
+            {member.social.portfolio && (
+              <a href={member.social.portfolio} target="_blank" rel="noopener noreferrer" class="social-badge" title="Portafolio Personal">
+                <i class="fas fa-globe"></i> Portafolio
+              </a>
+            )}
+          </div>
+
+          <!-- Botones de Descarga de CV -->
+          {member.cvPdfs && (
+            <div class="cv-download-group">
+              {member.cvPdfs.spa && (
+                <a href={member.cvPdfs.spa} download class="btn btn-primary cv-btn">
+                  <i class="fas fa-file-pdf"></i> Descargar CV (Español)
+                </a>
+              )}
+              {member.cvPdfs.eng && (
+                <a href={member.cvPdfs.eng} download class="btn btn-outline cv-btn">
+                  <i class="fas fa-file-pdf"></i> Download CV (English)
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </header>
+
+      <!-- Rejilla Principal de Contenido del Perfil -->
+      <div class="profile-grid">
+        <!-- Columna Izquierda: Bio, Experiencia y Educación -->
+        <div class="profile-main-col">
+          <!-- Sobre Mí -->
+          <section class="profile-card" data-aos="fade-up">
+            <h2 class="card-title"><i class="fas fa-user"></i> Sobre Mí</h2>
+            <div class="bio-content">
+              {member.fullBio.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </section>
+
+          <!-- Experiencia Laboral -->
+          <section class="profile-card" data-aos="fade-up">
+            <h2 class="card-title"><i class="fas fa-briefcase"></i> Experiencia Laboral</h2>
+            <div class="timeline">
+              {member.experience.map((exp) => (
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <h3 class="exp-title">{exp.title}</h3>
+                    <p class="exp-company">{exp.company}</p>
+                    <span class="exp-period">{exp.period}</span>
+                    {exp.description && <p class="exp-desc">{exp.description}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <!-- Educación -->
+          <section class="profile-card" data-aos="fade-up">
+            <h2 class="card-title"><i class="fas fa-graduation-cap"></i> Educación</h2>
+            <div class="education-list">
+              {member.education.map((edu) => (
+                <div class="edu-item">
+                  <h3 class="edu-degree">{edu.degree}</h3>
+                  <p class="edu-school">{edu.school}</p>
+                  <span class="edu-year">{edu.year}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <!-- Columna Derecha: Habilidades y Certificaciones -->
+        <div class="profile-side-col">
+          <!-- Habilidades Técnicas -->
+          <section class="profile-card" data-aos="fade-up">
+            <h2 class="card-title"><i class="fas fa-code"></i> Habilidades Técnicas</h2>
+            <div class="skills-wrap">
+              {member.skills.map((skill) => (
+                <span class="skill-pill">{skill}</span>
+              ))}
+            </div>
+          </section>
+
+          <!-- Certificaciones e Insignias de Credly -->
+          {member.certifications && (
+            <section class="profile-card" data-aos="fade-up">
+              <h2 class="card-title"><i class="fas fa-certificate"></i> Certificaciones Profesionales</h2>
+              
+              {member.certifications.credlyBadges && member.certifications.credlyBadges.length > 0 && (
+                <div class="credly-badges-grid">
+                  {member.certifications.credlyBadges.map((badge) => (
+                    <div class="credly-badge-item">
+                      <div 
+                        data-iframe-width="150" 
+                        data-iframe-height="270" 
+                        data-share-badge-id={badge.badgeId} 
+                        data-share-badge-host="https://www.credly.com"
+                      ></div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .profile-page {
+    padding-top: 130px;
+    padding-bottom: 5rem;
+    background-color: var(--bg-color);
+    min-height: 100vh;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    transition: var(--transition);
+  }
+
+  .back-link:hover {
+    color: #2563eb;
+    transform: translateX(-5px);
+  }
+
+  .profile-header {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    box-shadow: 0 10px 30px var(--shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 2.5rem;
+  }
+
+  .profile-avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 4px solid var(--accent-color);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-title-area {
+    flex-grow: 1;
+  }
+
+  .profile-name {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.3rem;
+  }
+
+  .profile-role {
+    font-size: 1.15rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+  }
+
+  .profile-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .social-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    background-color: var(--accent-color-light);
+    color: var(--accent-color);
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: var(--transition);
+  }
+
+  .social-badge:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .cv-download-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.4rem;
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2rem;
+  }
+
+  @media (max-width: 992px) {
+    .profile-grid {
+      grid-template-columns: 1fr;
+    }
+    .profile-header {
+      flex-direction: column;
+      text-align: center;
+    }
+    .profile-social, .cv-download-group {
+      justify-content: center;
+    }
+  }
+
+  .profile-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px var(--shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 2px solid var(--accent-color-light);
+    padding-bottom: 0.75rem;
+  }
+
+  .card-title i {
+    color: var(--accent-color);
+  }
+
+  .bio-content p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--accent-color);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.1rem;
+    top: 0.3rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    border: 3px solid var(--card-bg);
+  }
+
+  .exp-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  .exp-company {
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .exp-period {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-desc {
+    font-size: 0.95rem;
+    color: var(--text-color);
+  }
+
+  .edu-item {
+    margin-bottom: 1.25rem;
+  }
+
+  .edu-degree {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  .edu-school {
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .edu-year {
+    font-size: 0.85rem;
+    color: var(--light-text);
+  }
+
+  .skills-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .skill-pill {
+    padding: 0.4rem 1rem;
+    background-color: var(--accent-color-light);
+    color: var(--accent-color);
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .credly-badges-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-top: 1rem;
+  }
+
+  .credly-badge-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+  }
+
+  .credly-badge-item:hover {
+    transform: scale(1.03);
+  }
+</style>

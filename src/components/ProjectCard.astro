@@ -1,0 +1,94 @@
+---
+import type { Project } from '../data/projects';
+import { TEAM_MEMBERS } from '../data/team';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const projectMembers = (project.participants || [])
+  .map(slug => TEAM_MEMBERS.find(m => m.slug === slug))
+  .filter(Boolean);
+---
+
+<div class="project" data-aos="fade-up">
+  <a href={`/proyectos/${project.slug}`} class="project-card-link">
+    <div class="project-image">
+      <img src={project.mainImage} alt={project.title} loading="lazy" />
+    </div>
+    <div class="project-content">
+      <span class="project-category">{project.category}</span>
+      <h3 class="project-title">{project.title}</h3>
+      <p class="project-description">{project.summary}</p>
+      
+      {projectMembers.length > 0 && (
+        <div class="project-participants">
+          <div class="participant-avatars">
+            {projectMembers.map(member => (
+              <img 
+                src={member?.image} 
+                alt={member?.name} 
+                class="avatar-small" 
+                title={member?.name} 
+                loading="lazy" 
+              />
+            ))}
+          </div>
+          <span class="participants-text">
+            <strong>{projectMembers.length}</strong> integrante{projectMembers.length > 1 ? 's' : ''}
+          </span>
+        </div>
+      )}
+      
+      <div class="project-link">
+        Ver Detalles & Evidencias <i class="fas fa-arrow-right"></i>
+      </div>
+    </div>
+  </a>
+</div>
+
+<style>
+  .project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+  }
+  .project-participants {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    background-color: var(--bg-color);
+    padding: 0.6rem;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    width: fit-content;
+  }
+  .participant-avatars {
+    display: flex;
+    align-items: center;
+  }
+  .avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    margin-left: -10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .participant-avatars .avatar-small:first-child {
+    margin-left: 0;
+  }
+  .participants-text {
+    font-size: 0.85rem;
+    color: var(--light-text);
+  }
+  .participants-text strong {
+    color: var(--primary-color);
+  }
+</style>

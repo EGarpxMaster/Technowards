@@ -1,0 +1,96 @@
+---
+import type { TeamMember } from "../data/team";
+
+interface Props {
+  member: TeamMember;
+}
+
+const { member } = Astro.props;
+---
+
+<div class="team-member" data-aos="fade-up">
+  <a href={`/equipo/${member.slug}`} class="team-member-link">
+    <div class="member-image">
+      <img src={member.image} alt={member.name} loading="lazy" />
+    </div>
+    <div class="member-info">
+      <h3 class="member-name">{member.name}</h3>
+      <p class="member-role">{member.role}</p>
+
+      <div class="member-social">
+        {
+          member.social.linkedin && (
+            <a
+              href={member.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-icon"
+              aria-label="LinkedIn"
+              onclick="event.stopPropagation()"
+            >
+              <i class="fab fa-linkedin" />
+            </a>
+          )
+        }
+        {
+          member.social.github && (
+            <a
+              href={member.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-icon"
+              aria-label="GitHub"
+              onclick="event.stopPropagation()"
+            >
+              <i class="fab fa-github" />
+            </a>
+          )
+        }
+        {
+          member.social.email && (
+            <a
+              href={`mailto:${member.social.email}`}
+              class="social-icon"
+              aria-label="Email"
+              onclick="event.stopPropagation()"
+            >
+              <i class="fas fa-envelope" />
+            </a>
+          )
+        }
+      </div>
+
+      <div class="view-profile-btn">
+        <span>Ver Perfil</span>
+        <i class="fas fa-arrow-right"></i>
+      </div>
+    </div>
+  </a>
+</div>
+
+<style>
+  .team-member-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+  }
+  .view-profile-btn {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+  }
+  .team-member:hover .view-profile-btn {
+    color: #2563eb;
+    gap: 0.75rem;
+  }
+</style>
