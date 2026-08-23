@@ -191,33 +191,62 @@ export const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     slug: "uziel-solis",
-    name: "Uziel Solis",
-    role: "Analista de Datos y Mantenimiento de Software",
+    name: "Uziel Solis Avendaño",
+    role: "Analista de datos & Desarrollador Full-Stack",
     image: "/images/dev/uzi.png",
-    bio: "Especializado en análisis de datos, soporte de sistemas y optimización de software.",
+    bio: "Ingeniero en Datos con enfoque en análisis de información y sistemas de apoyo a la toma de decisiones.",
     fullBio: [
-      "Estudiante de Ingeniería en Datos e Inteligencia Organizacional especializándome en análisis de datos y mantenimiento de software.",
-      "Apasionado por transformar datos en insights valiosos y garantizar el óptimo funcionamiento de los sistemas informáticos."
+      "Ingeniero en Datos con enfoque en análisis de información y sistemas de apoyo a la toma de decisiones. Experiencia en el desarrollo de propuestas tecnológicas (ERP), análisis de datos para optimización de procesos y gestión de información organizacional.",
+      "Ha participado en proyectos académicos y comunitarios que integran análisis, planificación y coordinación operativa. Interesado en el diseño de soluciones basadas en datos, mejora de procesos y uso estratégico de sistemas de información para generar valor empresarial y social."
     ],
-    skills: ["Python", "SQL", "Análisis de Datos", "Windows/Linux", "Mantenimiento Software", "Visualización de Datos"],
+    skills: ["Python", "SQL", "C", "C++", "JavaScript", "PHP", "AWS", "Git", "Data Pipelines", "React", "HTML5", "CSS3", "Node", "Linux", "Windows"],
     social: {
-      linkedin: "#",
-      github: "#",
-      email: "uziel@example.com"
+      linkedin: "www.linkedin.com/in/uziel-armando-solis-avendano-04a16034b",
+      github: "https://github.com/Uziel2002",
+      email: "uziel.solis.20@gmail.com"
     },
     experience: [
       {
-        title: "Practicante en Análisis de Datos & Soporte",
-        company: "TechnoWards",
-        period: "2022 - Presente",
-        description: "Análisis cualitativo y cuantitativo de datos, soporte de sistemas y mantenimiento."
+        title: "Ejecutivo de TI - Desarrollador Full-Stack",
+        company: "APS Holding - Cancún, Q. Roo",
+        period: "Marzo 2026 - Actualmente",
+        description: "Desarrollo y mantenimiento de soluciones tecnológicas full-stack para la organización."
+      },
+      {
+        title: "Analista de Datos",
+        company: "IMPLAN - Cancún, Q. Roo",
+        period: "Agosto 2025 - Diciembre 2025",
+        description: "Análisis de datos para la optimización de procesos y gestión de información organizacional."
+      },
+      {
+        title: "Desarrollador Full-Stack",
+        company: "Proyecto Jornada de Ingeniería Industrial (Universidad del Caribe) - Cancún, Q. Roo",
+        period: "Agosto 2024 - Octubre 2025",
+        description: "Desarrollo de sistemas de apoyo para la coordinación operativa del proyecto."
+      },
+      {
+        title: "Tester, soporte y mantenimiento",
+        company: "Cancun Sailing Catamarans",
+        period: "Enero 2024 - Agosto 2024",
+        description: "Pruebas de software, soporte técnico y mantenimiento de sistemas."
+      },
+      {
+        title: "Prácticas profesionales (Sistemas)",
+        company: "Quimco",
+        period: "Agosto 2023 - Diciembre 2023",
+        description: "Prácticas profesionales en el área de sistemas."
       }
     ],
     education: [
       {
-        degree: "Ingeniería en Datos e Inteligencia Organizacional",
+        degree: "Ingeniería en Datos e Inteligencia Organizacional (especialización en Inteligencia de Negocios)",
         school: "Universidad del Caribe",
-        year: "2020 - 2025"
+        year: "2020 - 2026"
+      },
+      {
+        degree: "Técnico en Programación",
+        school: "CBTIS 111",
+        year: "2017 - 2020"
       }
     ]
   }
